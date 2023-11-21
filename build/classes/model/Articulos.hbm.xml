@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 21, 2023 1:50:06 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Articulos" table="ARTICULOS" schema="AD_TEMA03" optimistic-lock="version">
+        <id name="referart" type="string">
+            <column name="REFERART" length="6" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="familias" class="model.Familias" fetch="select">
+            <column name="CODFAM" length="6" not-null="true" />
+        </many-to-one>
+        <property name="nomart" type="string">
+            <column name="NOMART" length="20" />
+        </property>
+        <property name="precio" type="java.lang.Short">
+            <column name="PRECIO" precision="4" scale="0" />
+        </property>
+        <set name="lineasFacturases" table="LINEAS_FACTURAS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="REFERART" length="6" not-null="true" />
+            </key>
+            <one-to-many class="model.LineasFacturas" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 21, 2023 1:50:06 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.LineasFacturas" table="LINEAS_FACTURAS" schema="AD_TEMA03" optimistic-lock="version">
+        <composite-id name="id" class="model.LineasFacturasId">
+            <key-property name="referart" type="string">
+                <column name="REFERART" length="6" />
+            </key-property>
+            <key-property name="numfac" type="string">
+                <column name="NUMFAC" length="6" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="articulos" class="model.Articulos" update="false" insert="false" fetch="select">
+            <column name="REFERART" length="6" not-null="true" />
+        </many-to-one>
+        <many-to-one name="facturas" class="model.Facturas" update="false" insert="false" fetch="select">
+            <column name="NUMFAC" length="6" not-null="true" />
+        </many-to-one>
+        <property name="cantidad" type="java.lang.Short">
+            <column name="CANTIDAD" precision="4" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>
