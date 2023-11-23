@@ -60,8 +60,10 @@ public class LineasFacturas  implements java.io.Serializable {
     }
 
 
-
-
+    @Override
+    public String toString() {
+        return id.toString();
+    }
 }
 
 

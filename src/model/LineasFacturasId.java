@@ -35,8 +35,12 @@ public class LineasFacturasId  implements java.io.Serializable {
         this.numfac = numfac;
     }
 
+    @Override
+    public String toString() {
+        return referart + ":" + numfac;
+    }
 
-   public boolean equals(Object other) {
+    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
 		 if ( (other == null ) ) return false;
 		 if ( !(other instanceof LineasFacturasId) ) return false;

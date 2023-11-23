@@ -28,7 +28,12 @@ public class Facturas  implements java.io.Serializable {
        this.clientes = clientes;
        this.lineasFacturases = lineasFacturases;
     }
-   
+
+    @Override
+    public String toString() {
+        return clientes.toString();
+    }
+
     public String getNumfac() {
         return this.numfac;
     }
