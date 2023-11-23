@@ -5,10 +5,13 @@
 package view;
 
 import SwingModels.ArticulosTableModel;
+import controller.FamiliasDAO;
 import model.Articulos;
+import model.Familias;
 
+import javax.swing.*;
 import javax.swing.table.TableModel;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,16 +19,25 @@ import java.util.List;
  */
 public class ArticulosDialogPanel extends javax.swing.JPanel {
 
+    private Familias selectedFamilia;
     private TableModel articulosTableModel;
 
     /**
      * Creates new form ArticulosDialogPanel
      */
-    public ArticulosDialogPanel(List<Articulos> articulosList) {
+    public ArticulosDialogPanel(Familias selectedFamilia) {
         initComponents();
-        articulosTableModel = new ArticulosTableModel(articulosList);
+        this.selectedFamilia = selectedFamilia;
+        init();
+    }
+
+    //<editor-fold desc="My Functions">
+    private void init() {
+        //noinspection unchecked
+        articulosTableModel = new ArticulosTableModel(new ArrayList<Articulos>(this.selectedFamilia.getArticuloses()));
         jArticulosTable.setModel(articulosTableModel);
     }
+    //</editor-fold>
 
 
     /**
@@ -39,6 +51,15 @@ public class ArticulosDialogPanel extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jArticulosTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jRefTextField = new javax.swing.JTextField();
+        jNombreTextField = new javax.swing.JTextField();
+        jPrecioTextField = new javax.swing.JTextField();
+        jAddButton = new javax.swing.JButton();
+        jRemoveButton = new javax.swing.JButton();
 
         jArticulosTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -50,27 +71,103 @@ public class ArticulosDialogPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jArticulosTable);
 
+        jLabel1.setText("Añadir articulo");
+
+        jLabel2.setText("Ref");
+
+        jLabel3.setText("Nombre");
+
+        jLabel4.setText("Precio");
+
+        jAddButton.setText("Añadir");
+
+        jRemoveButton.setText("-");
+        jRemoveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRemoveButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jRefTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jNombreTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPrecioTextField))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jAddButton))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRemoveButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRemoveButton))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jRefTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jNombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jPrecioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jAddButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRemoveButtonActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = jArticulosTable.getSelectedRow();
+        if (selectedRow <= -1) return;
+        int option = JOptionPane.showConfirmDialog(this, "Desea eliminar el articulo");
+        if (option != JOptionPane.OK_OPTION) return;
+        boolean removed = FamiliasDAO.removeArticuloFromFamilia(
+                ((ArticulosTableModel) articulosTableModel).getArticulosList().get(selectedRow)
+        );
+        if (removed) {
+            JOptionPane.showMessageDialog(this,"Articulo eliminado");
+            init();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error: Articulo no eliminado");
+        }
+    }//GEN-LAST:event_jRemoveButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jAddButton;
     private javax.swing.JTable jArticulosTable;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JTextField jNombreTextField;
+    private javax.swing.JTextField jPrecioTextField;
+    private javax.swing.JTextField jRefTextField;
+    private javax.swing.JButton jRemoveButton;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

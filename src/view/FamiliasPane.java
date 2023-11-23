@@ -3,17 +3,13 @@ package view;
 import SwingModels.FamiliasTableModel;
 import controller.FamiliasDAO;
 import controller.Utils;
-import model.Articulos;
 import model.Familias;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
 
-import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import static controller.Utils.TODO;
 
@@ -256,7 +252,7 @@ public class FamiliasPane extends javax.swing.JPanel {
         if (selectedRow <= -1) return;
         //noinspection unchecked
         window.setContentPane(new ArticulosDialogPanel(
-                new ArrayList<Articulos>(getFamiliasList().get(selectedRow).getArticuloses())
+                getFamiliasList().get(selectedRow)
         ));
         window.pack();
         window.setVisible(true);

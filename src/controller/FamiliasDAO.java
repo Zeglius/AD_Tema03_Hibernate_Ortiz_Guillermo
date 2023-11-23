@@ -5,7 +5,6 @@ import model.Familias;
 import org.hibernate.HibernateException;
 import org.hibernate.LazyInitializationException;
 import org.hibernate.Session;
-import org.hibernate.collection.internal.PersistentSet;
 
 import java.util.List;
 import java.util.Set;
@@ -41,18 +40,19 @@ public final class FamiliasDAO {
     public static boolean addFamilia(Familias familia) {
         initOperation();
 
+        boolean res = false;
+
         try {
             session.save(familia);
             session.getTransaction().commit();
+            res = true;
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            session.close();
-            return false;
         } finally {
             session.close();
         }
 
-        return true;
+        return res;
     }
 
     public static Set<Articulos> getFamiliaArticulos(Familias familia) {
@@ -63,6 +63,22 @@ public final class FamiliasDAO {
             res = ((Set<Articulos>) familia.getArticuloses());
         } catch (LazyInitializationException e) {
             throw new RuntimeException(e);
+        } finally {
+            session.close();
+        }
+
+        return res;
+    }
+
+    public static boolean removeArticuloFromFamilia(Articulos articulo) {
+        initOperation();
+
+        //noinspection UnusedAssignment
+        boolean res = false;
+        try {
+            session.delete(articulo);
+            session.getTransaction().commit();
+            res = true;
         } finally {
             session.close();
         }
