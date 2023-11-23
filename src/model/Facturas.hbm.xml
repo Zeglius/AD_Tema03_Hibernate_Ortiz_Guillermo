@@ -11,7 +11,7 @@
         <many-to-one name="clientes" class="model.Clientes" fetch="select">
             <column name="CODCLI" length="6" not-null="true" />
         </many-to-one>
-        <set name="lineasFacturases" table="LINEAS_FACTURAS" inverse="true" lazy="true" fetch="select">
+        <set name="lineasFacturases" table="LINEAS_FACTURAS" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="NUMFAC" length="6" not-null="true" />
             </key>
