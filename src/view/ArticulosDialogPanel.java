@@ -5,11 +5,10 @@
 package view;
 
 import SwingModels.ArticulosTableModel;
-import controller.FamiliasDAO;
-import model.Familias;
+import model.Articulos;
 
 import javax.swing.table.TableModel;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,26 +17,16 @@ import java.util.ArrayList;
 public class ArticulosDialogPanel extends javax.swing.JPanel {
 
     private TableModel articulosTableModel;
-    private Familias selectedFamilia;
 
     /**
      * Creates new form ArticulosDialogPanel
      */
-    public ArticulosDialogPanel(Familias familia) {
-        this.selectedFamilia = familia;
+    public ArticulosDialogPanel(List<Articulos> articulosList) {
         initComponents();
-        init();
-    }
-
-    //<editor-fold desc="My Functions">
-    private void init() {
-        // TODO: 23/11/23 Query articulos of a SELECTED familia
-        articulosTableModel = new ArticulosTableModel(
-                new ArrayList<>(FamiliasDAO.getFamiliaArticulos(selectedFamilia))
-        );
+        articulosTableModel = new ArticulosTableModel(articulosList);
         jArticulosTable.setModel(articulosTableModel);
     }
-    //</editor-fold>
+
 
     /**
      * This method is called from within the constructor to initialize the form.

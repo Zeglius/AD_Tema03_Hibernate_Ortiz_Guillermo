@@ -11,7 +11,7 @@
         <property name="nomfam" type="string">
             <column name="NOMFAM" length="20" />
         </property>
-        <set name="articuloses" table="ARTICULOS" inverse="true" lazy="true" fetch="select">
+        <set name="articuloses" table="ARTICULOS" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="CODFAM" length="6" not-null="true" />
             </key>

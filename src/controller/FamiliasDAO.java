@@ -60,9 +60,7 @@ public final class FamiliasDAO {
         initOperation();
 
         try {
-            // FIXME: 23/11/23 getArticuloses() results in a LazyInitializationError???
             res = ((Set<Articulos>) familia.getArticuloses());
-            assert !res.isEmpty();
         } catch (LazyInitializationException e) {
             throw new RuntimeException(e);
         } finally {
