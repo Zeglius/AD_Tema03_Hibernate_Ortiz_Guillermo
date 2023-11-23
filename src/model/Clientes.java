@@ -20,7 +20,7 @@ public class Clientes  implements java.io.Serializable {
     public Clientes() {
     }
 
-	
+
     public Clientes(String codcli) {
         this.codcli = codcli;
     }
@@ -31,39 +31,57 @@ public class Clientes  implements java.io.Serializable {
        this.dni = dni;
        this.facturases = facturases;
     }
-   
+
+    @Override
+    public String toString() {
+        return this.codcli;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Clientes clientes)) return false;
+
+        return codcli.equals(clientes.codcli);
+    }
+
+    @Override
+    public int hashCode() {
+        return codcli.hashCode();
+    }
+
     public String getCodcli() {
         return this.codcli;
     }
-    
+
     public void setCodcli(String codcli) {
         this.codcli = codcli;
     }
     public String getNomcli() {
         return this.nomcli;
     }
-    
+
     public void setNomcli(String nomcli) {
         this.nomcli = nomcli;
     }
     public String getApecli() {
         return this.apecli;
     }
-    
+
     public void setApecli(String apecli) {
         this.apecli = apecli;
     }
     public String getDni() {
         return this.dni;
     }
-    
+
     public void setDni(String dni) {
         this.dni = dni;
     }
     public Set getFacturases() {
         return this.facturases;
     }
-    
+
     public void setFacturases(Set facturases) {
         this.facturases = facturases;
     }
