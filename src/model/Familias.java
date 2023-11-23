@@ -27,7 +27,20 @@ public class Familias  implements java.io.Serializable {
        this.nomfam = nomfam;
        this.articuloses = articuloses;
     }
-   
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Familias familias)) return false;
+
+        return codfam.equals(familias.codfam);
+    }
+
+    @Override
+    public int hashCode() {
+        return codfam.hashCode();
+    }
+
     public String getCodfam() {
         return this.codfam;
     }
