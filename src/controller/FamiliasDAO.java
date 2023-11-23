@@ -70,10 +70,33 @@ public final class FamiliasDAO {
         return res;
     }
 
+    public static boolean addArticuloToFamilia(Articulos articulo, Familias familia) {
+        boolean res = false;
+        initOperation();
+
+        try {
+            addArticulo:
+            {
+                if (familia.getArticuloses().contains(articulo)) {
+                    res = false;
+                    break addArticulo;
+                }
+
+                session.save(articulo);
+                session.getTransaction().commit();
+                res = true;
+            }
+        } finally {
+            session.close();
+        }
+
+        return res;
+    }
+
     public static boolean removeArticuloFromFamilia(Articulos articulo) {
         initOperation();
 
-        //noinspection UnusedAssignment
+        // noinspection UnusedAssignment
         boolean res = false;
         try {
             session.delete(articulo);
@@ -97,6 +120,17 @@ public final class FamiliasDAO {
             session.close();
         }
 
+        return res;
+    }
+
+    public static  Familias getFamilia(Familias familia) {
+        initOperation();
+        Familias res = null;
+        try {
+            res = (Familias) session.get(Familias.class, familia.getCodfam());
+        } finally {
+            session.close();
+        }
         return res;
     }
 }

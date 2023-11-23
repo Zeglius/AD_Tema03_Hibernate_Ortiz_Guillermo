@@ -33,6 +33,7 @@ public class ArticulosDialogPanel extends javax.swing.JPanel {
 
     //<editor-fold desc="My Functions">
     private void init() {
+        selectedFamilia = FamiliasDAO.getFamilia(selectedFamilia);
         //noinspection unchecked
         articulosTableModel = new ArticulosTableModel(new ArrayList<Articulos>(this.selectedFamilia.getArticuloses()));
         jArticulosTable.setModel(articulosTableModel);
@@ -80,6 +81,11 @@ public class ArticulosDialogPanel extends javax.swing.JPanel {
         jLabel4.setText("Precio");
 
         jAddButton.setText("Añadir");
+        jAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jAddButtonActionPerformed(evt);
+            }
+        });
 
         jRemoveButton.setText("-");
         jRemoveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -140,7 +146,6 @@ public class ArticulosDialogPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRemoveButtonActionPerformed
-        // TODO add your handling code here:
         int selectedRow = jArticulosTable.getSelectedRow();
         if (selectedRow <= -1) return;
         int option = JOptionPane.showConfirmDialog(this, "Desea eliminar el articulo");
@@ -155,6 +160,28 @@ public class ArticulosDialogPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Error: Articulo no eliminado");
         }
     }//GEN-LAST:event_jRemoveButtonActionPerformed
+
+    private void jAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAddButtonActionPerformed
+        String refeart = jRefTextField.getText();
+        String nomart = jNombreTextField.getText();
+        String precio = jPrecioTextField.getText();
+
+        boolean valid = !refeart.isBlank() && !nomart.isBlank() && !precio.isBlank();
+
+        if (!valid) {
+            JOptionPane.showMessageDialog(this,  "Alguno de los campos está vacio");
+            return;
+        }
+
+        // TODO: 23/11/23 Add relationship between Articulo and lineaFacturases
+        Articulos articulo = new Articulos(refeart, selectedFamilia, nomart, Short.parseShort(precio), null);
+        if (FamiliasDAO.addArticuloToFamilia(articulo, selectedFamilia)) {
+            JOptionPane.showMessageDialog(this, "Articulo fue añadido");
+            init();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error: Articulo no fue añadido");
+        }
+    }//GEN-LAST:event_jAddButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
